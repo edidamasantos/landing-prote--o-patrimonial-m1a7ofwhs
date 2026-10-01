@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 215 45% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 45% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 45% 12%;
+    --primary: 213 55% 16%;
+    --primary-foreground: 40 50% 92%;
+    --secondary: 215 25% 96%;
+    --secondary-foreground: 215 45% 12%;
+    --accent: 40 62% 45%;
+    --accent-foreground: 215 45% 12%;
+    --muted: 215 25% 96%;
+    --muted-foreground: 215 15% 42%;
+    --border: 215 20% 89%;
+    --input: 215 20% 89%;
+    --ring: 213 55% 16%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 215 45% 8%;
+    --foreground: 0 0% 95%;
+    --card: 215 35% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 215 35% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 40 62% 55%;
+    --primary-foreground: 215 45% 8%;
+    --secondary: 215 30% 16%;
+    --secondary-foreground: 0 0% 95%;
+    --accent: 40 62% 60%;
+    --accent-foreground: 215 45% 8%;
+    --muted: 215 30% 16%;
+    --muted-foreground: 215 15% 65%;
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 40 62% 55%;
+    --destructive: 0 62% 42%;
+    --destructive-foreground: 0 0% 95%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply m-0 bg-background font-sans text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  button,
+  input,
+  textarea,
+  select,
+  [role='button'] {
+    border-radius: var(--radius);
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  .button-motion {
+    @apply transition duration-150 hover:scale-[1.02] active:scale-[0.98];
+  }
+  .focus-ring {
+    @apply rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+  .nav-link {
+    @apply relative py-2 font-medium text-foreground transition-colors duration-200 hover:text-accent;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-200;
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    @apply scale-x-100;
+  }
+  .footer-link {
+    @apply flex items-center gap-3 rounded-sm opacity-80 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent;
+  }
+  .theme-icon {
+    @apply transition-all duration-200;
+  }
+  .hero-glow {
+    background-image: radial-gradient(
+      circle at 50% 42%,
+      hsl(var(--accent) / 0.09),
+      transparent 30%
+    );
+  }
+  .hero-enter {
+    opacity: 0;
+    animation: fade-in-up 500ms ease-out forwards;
+  }
+  .hero-delay-1 {
+    animation-delay: 80ms;
+  }
+  .hero-delay-2 {
+    animation-delay: 160ms;
+  }
+  .hero-delay-3 {
+    animation-delay: 240ms;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-enter {
+    opacity: 1;
+  }
+}
