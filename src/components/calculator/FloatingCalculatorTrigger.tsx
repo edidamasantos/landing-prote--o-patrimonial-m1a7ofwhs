@@ -37,9 +37,9 @@ export function FloatingCalculatorTrigger({ onContactClick }: FloatingCalculator
 
   return (
     <>
-      {/* CARD / BOTÃO FLUTUANTE DISCRETO COM CTA */}
+      {/* CARD / BOTÃO FLUTUANTE DISCRETO COM CTA (POSICIONADO ACIMA DO BOTÃO DE CHAT PARA COEXISTÊNCIA HARMONIOSA) */}
       <div
-        className={`fixed bottom-5 right-5 z-40 transition-all duration-300 ${
+        className={`fixed bottom-20 sm:bottom-22 right-5 z-40 transition-all duration-300 ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0 pointer-events-none'
         }`}
       >

@@ -29,6 +29,7 @@ import {
 import { ContactForm } from '@/components/ContactForm'
 import { PatrimonialCalculator } from '@/components/calculator/PatrimonialCalculator'
 import { FloatingCalculatorTrigger } from '@/components/calculator/FloatingCalculatorTrigger'
+import { ChatBotWidget } from '@/components/chat/ChatBotWidget'
 import {
   segmentosData,
   beneficiosHolding,
@@ -618,6 +619,9 @@ export default function Index() {
 
       {/* ITEM FLUTUANTE DA CALCULADORA COM CTA DISCRETO */}
       <FloatingCalculatorTrigger onContactClick={scrollToContact} />
+
+      {/* WIDGET FLUTUANTE DE CHAT DE DÚVIDAS E QUALIFICAÇÃO */}
+      <ChatBotWidget onScheduleClick={scrollToContact} />
 
       {/* 8. CONTATO COM FORMULÁRIO DE LEAD */}
       <section

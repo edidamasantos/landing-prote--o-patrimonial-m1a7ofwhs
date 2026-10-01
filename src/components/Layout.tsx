@@ -206,7 +206,7 @@ export function Layout({ children }: { children: ReactNode }) {
               </li>
               <li>
                 <a
-                  href="https://wa.me/5511957697373"
+                  href="https://wa.me/5511957697373?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20reuni%C3%A3o%20diagn%C3%B3stica%20sobre%20holding%20familiar."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-link"
