@@ -27,6 +27,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { ContactForm } from '@/components/ContactForm'
+import { PatrimonialCalculator } from '@/components/calculator/PatrimonialCalculator'
+import { FloatingCalculatorTrigger } from '@/components/calculator/FloatingCalculatorTrigger'
 import {
   segmentosData,
   beneficiosHolding,
@@ -38,6 +40,11 @@ import {
 export default function Index() {
   const scrollToContact = () => {
     const el = document.getElementById('contato')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const scrollToCalculator = () => {
+    const el = document.getElementById('calculadora')
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -81,10 +88,10 @@ export default function Index() {
               type="button"
               variant="outline"
               size="lg"
-              className="button-motion w-full border-border/80 px-7 py-6 text-base sm:w-auto"
-              onClick={scrollToAreas}
+              className="button-motion w-full border-accent/50 px-7 py-6 text-base text-accent hover:bg-accent/10 sm:w-auto"
+              onClick={scrollToCalculator}
             >
-              Conhecer áreas de atuação
+              Simular Custos do Inventário
             </Button>
           </div>
 
@@ -234,6 +241,37 @@ export default function Index() {
                 )
               })}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2.5 SEÇÃO DEDICADA: CALCULADORA COMPARATIVA DE CUSTOS v2 */}
+      <section
+        id="calculadora"
+        className="scroll-mt-20 border-t border-border/60 bg-gradient-to-b from-background via-muted/20 to-background py-20 lg:py-28"
+      >
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center mb-14">
+            <Badge
+              variant="outline"
+              className="border-accent/40 text-accent font-medium uppercase tracking-wider"
+            >
+              Simulador Técnico v2
+            </Badge>
+            <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Calculadora Comparativa de Custos
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              Compare em detalhes o custo real do <strong>Inventário Convencional</strong> contra o{' '}
+              <strong>Planejamento Precedente com Holding Familiar</strong>. Embutimos a tabela das{' '}
+              <strong>27 UFs</strong>, a tabela de honorários da OAB e o{' '}
+              <strong>veredito de liquidez imediata</strong> para proteger sua família de vendas
+              forçadas.
+            </p>
+          </div>
+
+          <div className="mx-auto max-w-5xl">
+            <PatrimonialCalculator onContactClick={scrollToContact} />
           </div>
         </div>
       </section>
@@ -577,6 +615,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* ITEM FLUTUANTE DA CALCULADORA COM CTA DISCRETO */}
+      <FloatingCalculatorTrigger onContactClick={scrollToContact} />
 
       {/* 8. CONTATO COM FORMULÁRIO DE LEAD */}
       <section

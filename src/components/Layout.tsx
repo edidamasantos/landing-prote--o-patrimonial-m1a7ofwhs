@@ -18,6 +18,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: 'O que é', href: '/#o-que-e' },
+  { label: 'Calculadora', href: '/#calculadora' },
   { label: 'Segmentos', href: '/#segmentos' },
   { label: 'Diferenciais', href: '/#diferenciais' },
   { label: 'Áreas de atuação', href: '/#areas-de-atuacao' },
@@ -204,19 +205,24 @@ export function Layout({ children }: { children: ReactNode }) {
                 </a>
               </li>
               <li>
-                <a href="tel:+5500000000000" className="footer-link">
+                <a
+                  href="https://wa.me/5511957697373"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
                   <Phone className="h-4 w-4 text-accent" />
-                  (00) 00000-0000
+                  (11) 95769-7373 (WhatsApp)
                 </a>
               </li>
               <li>
-                <a href="#" onClick={(event) => event.preventDefault()} className="footer-link">
-                  <Linkedin className="h-4 w-4 text-accent" />
-                  LinkedIn do escritório
+                <a href="/#calculadora" className="footer-link">
+                  <span className="h-2 w-2 rounded-full bg-accent" />
+                  Calculadora de Custos v2
                 </a>
               </li>
             </ul>
-            <p className="mt-4 text-xs opacity-65">Dados de contato provisórios.</p>
+            <p className="mt-4 text-xs opacity-65">Damasceno Santos Advocacia • São Paulo / SP</p>
           </div>
           <div>
             <h2 className="text-base font-semibold">Aviso legal</h2>
