@@ -160,7 +160,6 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                 {selectedUfData.descricao}
               </p>
             </div>
-
             {/* Parcela em Imóveis */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -182,9 +181,9 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                 aria-label="Slider de valor dos imóveis"
               />
               <p className="text-xs text-muted-foreground">
-                Base direta para cálculo do ITBI e custas de notas/escritura e RGI.
+                Base para custas de cartório de notas e RGI (no inventário) e eventual ITBI.
               </p>
-            </div>
+            </div>{' '}
           </div>
 
           {/* 3. Seletor de Regime: Litigioso vs Extrajudicial */}
@@ -425,49 +424,94 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
 
             {/* Bloco 3: Custos do Planejamento com Holding */}
             <div className="rounded-xl border border-accent/40 bg-accent/5 p-4 sm:p-5 space-y-4">
-              <h4 className="font-semibold text-sm text-foreground">
-                Parâmetros Específicos da Holding Familiar
-              </h4>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <h4 className="font-semibold text-sm text-foreground">
+                  Parâmetros Específicos do Planejamento com Holding
+                </h4>
+                <span className="text-[11px] text-accent font-medium">
+                  Honorários holding média 2% • ITBI padrão R$ 0 (CF/88)
+                </span>
+              </div>
 
-              <div className="grid gap-4 sm:grid-cols-3">
-                {/* ITBI na Integralização */}
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {/* 1. ITBI na Integralização (Padrão 0% com fundamento art. 156 CF/88) */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">
-                    Alíquota ITBI ({formatPercent(params.aliquotaItbiIntegralizacao)})
-                  </Label>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs font-medium">ITBI na Integralização</Label>
+                    <span className="font-mono text-xs font-bold text-accent">
+                      {params.aliquotaItbiIntegralizacao === 0
+                        ? '0% (R$ 0)'
+                        : formatPercent(params.aliquotaItbiIntegralizacao)}
+                    </span>
+                  </div>
                   <Slider
                     value={[params.aliquotaItbiIntegralizacao]}
                     min={0}
                     max={4}
                     step={0.25}
                     onValueChange={([val]) => update('aliquotaItbiIntegralizacao', val)}
-                    aria-label="Alíquota ITBI"
+                    aria-label="Alíquota ITBI na integralização"
                   />
-                  <p className="text-[11px] text-muted-foreground">2% a 3% (Ver Tema 1.348/STF)</p>
+                  <p className="text-[11px] text-muted-foreground leading-tight">
+                    Padrão 0% (ajustável para testar cenários com cobrança municipal).
+                  </p>
                 </div>
 
-                {/* Custo de Constituição */}
+                {/* 2. Honorários Advocatícios da Holding (~2% do monte-mor) */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">
-                    Constituição Holding ({formatCurrencyBRL(params.custoConstituicaoHolding)})
-                  </Label>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs font-medium">Honorários Advocatícios</Label>
+                    <span className="font-mono text-xs font-bold text-accent">
+                      {formatPercent(params.percHonorariosAdvHolding ?? 2)} (
+                      {formatCurrencyBRL(
+                        params.monteMor * ((params.percHonorariosAdvHolding ?? 2) / 100),
+                      )}
+                      )
+                    </span>
+                  </div>
+                  <Slider
+                    value={[params.percHonorariosAdvHolding ?? 2]}
+                    min={1}
+                    max={4}
+                    step={0.25}
+                    onValueChange={([val]) => update('percHonorariosAdvHolding', val)}
+                    aria-label="Honorários advocatícios da holding percentual do monte-mor"
+                  />
+                  <p className="text-[11px] text-muted-foreground leading-tight">
+                    Estimados em <strong>2% em média do monte-mor</strong>, a depender da
+                    complexidade do caso.
+                  </p>
+                </div>
+
+                {/* 3. Custo Estrutural de Constituição Fixo (R$ 30k a R$ 80k) */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs font-medium">Custo Estrutural Fixo</Label>
+                    <span className="font-mono text-xs font-bold text-foreground">
+                      {formatCurrencyBRL(params.custoConstituicaoHolding)}
+                    </span>
+                  </div>
                   <Slider
                     value={[params.custoConstituicaoHolding]}
                     min={30000}
                     max={80000}
                     step={5000}
                     onValueChange={([val]) => update('custoConstituicaoHolding', val)}
-                    aria-label="Custo constituição holding"
+                    aria-label="Custo de constituição estrutural fixo"
                   />
-                  <p className="text-[11px] text-muted-foreground">Faixa de R$ 30k a R$ 80k</p>
+                  <p className="text-[11px] text-muted-foreground leading-tight">
+                    Arquitetura societária, acordo de sócios, Junta e registros (R$ 30k a R$ 80k).
+                  </p>
                 </div>
 
-                {/* Manutenção Contábil PJ */}
+                {/* 4. Manutenção Contábil PJ */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium">
-                    Contabilidade Holding (
-                    {formatCurrencyBRL(params.honorariosContabeisHoldingMensal)}/mês)
-                  </Label>
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs font-medium">Contabilidade Holding</Label>
+                    <span className="font-mono text-xs font-semibold text-foreground">
+                      {formatCurrencyBRL(params.honorariosContabeisHoldingMensal)}/mês
+                    </span>
+                  </div>
                   <Slider
                     value={[params.honorariosContabeisHoldingMensal]}
                     min={800}
@@ -476,7 +520,20 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                     onValueChange={([val]) => update('honorariosContabeisHoldingMensal', val)}
                     aria-label="Contabilidade mensal holding"
                   />
-                  <p className="text-[11px] text-muted-foreground">Projeção anual de PJ</p>
+                  <p className="text-[11px] text-muted-foreground leading-tight">
+                    Escrituração e conformidade contábil anual da pessoa jurídica.
+                  </p>
+                </div>
+              </div>
+
+              {/* Fundamento legal do ITBI zerado visível no bloco */}
+              <div className="rounded-lg border border-accent/30 bg-background/70 p-3 text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+                <Info className="h-4 w-4 shrink-0 text-accent mt-0.5" />
+                <div>
+                  <strong className="text-foreground">Fundamento do ITBI zerado:</strong> ITBI
+                  zerado com base no art. 156 da CF/88 (integração de bens ao capital da sociedade
+                  não configura fato gerador do ITBI); exceções para empresas do ramo imobiliário
+                  serão analisadas caso a caso.
                 </div>
               </div>
             </div>

@@ -21,6 +21,7 @@ export function encodeSimulationParams(params: SimulationParams): string {
   q.set('gc', String(params.ganhoDeCapitalVenda))
   q.set('ir', String(params.aliquotaIrpfGanhoCapital))
   q.set('itbi', String(params.aliquotaItbiIntegralizacao))
+  q.set('hah', String(params.percHonorariosAdvHolding))
   q.set('ch', String(params.custoConstituicaoHolding))
   q.set('hch', String(params.honorariosContabeisHoldingMensal))
   if (params.reservaLiquidezFamilia !== undefined) {
@@ -88,7 +89,10 @@ export function decodeSimulationParams(search: string): Partial<SimulationParams
   if (ir && !isNaN(Number(ir))) result.aliquotaIrpfGanhoCapital = Number(ir)
 
   const itbi = q.get('itbi')
-  if (itbi && !isNaN(Number(itbi))) result.aliquotaItbiIntegralizacao = Number(itbi)
+  if (itbi !== null && !isNaN(Number(itbi))) result.aliquotaItbiIntegralizacao = Number(itbi)
+
+  const hah = q.get('hah')
+  if (hah !== null && !isNaN(Number(hah))) result.percHonorariosAdvHolding = Number(hah)
 
   const ch = q.get('ch')
   if (ch && !isNaN(Number(ch))) result.custoConstituicaoHolding = Number(ch)

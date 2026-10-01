@@ -24,8 +24,9 @@ export interface SimulationParams {
   aliquotaIrpfGanhoCapital: number // 15% a 22.5%
 
   // Planejamento com Holding
-  aliquotaItbiIntegralizacao: number // 2% a 3% (com disclaimer STF Tema 1.348)
-  custoConstituicaoHolding: number // R$ 30.000 a R$ 80.000
+  aliquotaItbiIntegralizacao: number // Padrão 0% com esteio no art. 156, § 2º, I da CF/88 (ajustável de 0% a 4%)
+  percHonorariosAdvHolding: number // Honorários advocatícios da holding: média de 2% do monte-mor (ajustável conforme complexidade, ex.: 1% a 4%)
+  custoConstituicaoHolding: number // Custo de constituição estrutural fixo separado (R$ 30.000 a R$ 80.000)
   honorariosContabeisHoldingMensal: number // R$ 800 a R$ 2.500/mês
   aliquotaItcmdDoacaoCustom?: number // Alíquota da doação em vida (se override da UF)
   aliquotaItcmdHerancaCustom?: number // Alíquota do inventário (se override da UF)
@@ -69,6 +70,7 @@ export interface SimulationResult {
   // Detalhamento Holding
   holdingComponents: {
     itbiIntegralizacao: ComponentBreakdown
+    honorariosAdvHolding: ComponentBreakdown
     constituicaoHolding: ComponentBreakdown
     itcmdDoacaoEmVida: ComponentBreakdown
     manutencaoContabilAnual: ComponentBreakdown
@@ -114,8 +116,9 @@ export const DEFAULT_SIMULATION_PARAMS: SimulationParams = {
   aliquotaIrpfGanhoCapital: 15,
 
   // Holding
-  aliquotaItbiIntegralizacao: 2.5,
-  custoConstituicaoHolding: 45000,
+  aliquotaItbiIntegralizacao: 0, // Padrão R$ 0 com fundamento no art. 156, § 2º, I da CF/88
+  percHonorariosAdvHolding: 2.0, // Honorários advocatícios holding em média 2% do monte-mor
+  custoConstituicaoHolding: 45000, // Custo de constituição estrutural fixo separado (R$ 30k a R$ 80k)
   honorariosContabeisHoldingMensal: 1200,
 
   // Reserva imediata de liquidez da família (para o veredito)
@@ -223,27 +226,41 @@ export function calculateSimulation(params: SimulationParams): SimulationResult 
 
   // --- CÁLCULO PLANEJAMENTO COM HOLDING ---
 
-  // 1. ITBI na Integralização
-  const valorItbi = baseImoveisCartorio * (params.aliquotaItbiIntegralizacao / 100)
+  // 1. ITBI na Integralização (padrão 0%, calculado sobre valor de imóveis)
+  const taxaItbi = params.aliquotaItbiIntegralizacao ?? 0
+  const valorItbi = baseImoveisCartorio * (taxaItbi / 100)
 
-  // 2. Constituição da Estrutura
+  // 2. Honorários Advocatícios da Holding (média de ~2% do monte-mor)
+  const taxaHonorariosAdvHolding =
+    params.percHonorariosAdvHolding !== undefined ? params.percHonorariosAdvHolding : 2.0
+  const valorHonorariosAdvHolding = params.monteMor * (taxaHonorariosAdvHolding / 100)
+
+  // 3. Custo de Constituição Estrutural Fixo da Holding (R$ 30.000 a R$ 80.000)
   const valorConstituicao = params.custoConstituicaoHolding
 
-  // 3. ITCMD sobre Doação em Vida com Usufruto
+  // 4. ITCMD sobre Doação em Vida com Usufruto
   // Freqüentemente com alíquotas menores ou faixas antecipadas antes de elevação da reforma
   const valorItcmdDoacao = params.monteMor * (aliquotaDoacao / 100)
 
-  // 4. Honorários Contábeis de Manutenção da Holding
+  // 5. Honorários Contábeis de Manutenção da Holding
   const valorContabilHoldingAno = params.honorariosContabeisHoldingMensal * 12
   const valorContabilHoldingHorizonte = params.honorariosContabeisHoldingMensal * mesesInventario
 
-  // Totais Holding: Ano 1 (implantação + tributos + 1 ano de contabilidade)
+  // Totais Holding: Ano 1 (honorários adv holding + constituição estrutural + ITBI + ITCMD doação + 1 ano contábil)
   const totalHoldingAno1 =
-    valorItbi + valorConstituicao + valorItcmdDoacao + valorContabilHoldingAno
+    valorItbi +
+    valorHonorariosAdvHolding +
+    valorConstituicao +
+    valorItcmdDoacao +
+    valorContabilHoldingAno
 
   // Total Holding no horizonte do inventário (para confronto justo prazo a prazo)
   const totalHoldingHorizonte =
-    valorItbi + valorConstituicao + valorItcmdDoacao + valorContabilHoldingHorizonte
+    valorItbi +
+    valorHonorariosAdvHolding +
+    valorConstituicao +
+    valorItcmdDoacao +
+    valorContabilHoldingHorizonte
 
   const economiaNominal = Math.max(0, totalInventario - totalHoldingHorizonte)
   const economiaPercentual =
@@ -391,20 +408,32 @@ export function calculateSimulation(params: SimulationParams): SimulationResult 
       itbiIntegralizacao: {
         id: 'itbi-holding',
         label: 'ITBI na Integralização de Imóveis',
-        baseCalculo: `Valor venal dos imóveis (${formatCurrencyBRL(baseImoveisCartorio)})`,
-        aliquotaOuRegra: `${formatPercent(params.aliquotaItbiIntegralizacao)}`,
+        baseCalculo:
+          taxaItbi === 0
+            ? 'Imunidade Constitucional (CF/88, art. 156)'
+            : `Imóveis integrais (${formatCurrencyBRL(baseImoveisCartorio)})`,
+        aliquotaOuRegra: taxaItbi === 0 ? 'R$ 0 (Isento/Imune)' : `${formatPercent(taxaItbi)}`,
         valor: valorItbi,
         descricao:
-          'Incide na transferência de imóveis para o capital social. Municípios costumam cobrar caso a atividade preponderante seja imobiliária (sujeito à tese do Tema 1.348/STF).',
+          'ITBI zerado com base no art. 156 da CF/88 (integração de bens ao capital da sociedade não configura fato gerador do ITBI); exceções para empresas do ramo imobiliário serão analisadas caso a caso.',
+      },
+      honorariosAdvHolding: {
+        id: 'honorarios-adv-holding',
+        label: 'Honorários Advocatícios da Holding',
+        baseCalculo: `Monte-mor integral (${formatCurrencyBRL(params.monteMor)})`,
+        aliquotaOuRegra: `~${formatPercent(taxaHonorariosAdvHolding)} (Estimativa média)`,
+        valor: valorHonorariosAdvHolding,
+        descricao:
+          'Honorários advocatícios especializados para assessoria no planejamento sucessório e holding familiar, estimados em 2% em média do monte-mor conforme a complexidade.',
       },
       constituicaoHolding: {
         id: 'constituicao-holding',
-        label: 'Constituição da Estrutura Societária',
-        baseCalculo: 'Custo único profissional e taxas',
-        aliquotaOuRegra: 'Valor fechado por complexidade',
+        label: 'Constituição Estrutural e Atos Societários',
+        baseCalculo: 'Estruturação societária e taxas públicas',
+        aliquotaOuRegra: 'Valor fixo estrutural',
         valor: valorConstituicao,
         descricao:
-          'Honorários jurídicos de arquitetura societária, acordo de sócios, protocolo de família, Junta Comercial e registro.',
+          'Custo de constituição estrutural fixo: arquitetura do contrato/estatuto social, acordo de sócios, protocolo familiar, taxas da Junta Comercial e averbações.',
       },
       itcmdDoacaoEmVida: {
         id: 'itcmd-doacao',

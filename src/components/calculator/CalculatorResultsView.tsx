@@ -241,15 +241,34 @@ export function CalculatorResultsView({
 
           <div className="mt-6 space-y-3 border-t border-accent/20 pt-4 text-xs">
             <div className="flex justify-between items-center text-muted-foreground">
-              <span>Constituição e Arquitetura Societária:</span>
+              <span>
+                Honorários Advocatícios Holding (~
+                {formatPercent(result.params.percHonorariosAdvHolding ?? 2)}):
+              </span>
+              <span className="font-semibold text-foreground">
+                {formatCurrencyBRL(hld.honorariosAdvHolding.valor)}
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-muted-foreground">
+              <span>Constituição Estrutural Societária:</span>
               <span className="font-semibold text-foreground">
                 {formatCurrencyBRL(hld.constituicaoHolding.valor)}
               </span>
             </div>
             <div className="flex justify-between items-center text-muted-foreground">
-              <span>ITBI na Integralização ({result.params.aliquotaItbiIntegralizacao}%):</span>
-              <span className="font-semibold text-foreground">
-                {formatCurrencyBRL(hld.itbiIntegralizacao.valor)}
+              <span className="flex items-center gap-1">
+                ITBI na Integralização (
+                {result.params.aliquotaItbiIntegralizacao === 0
+                  ? '0% - Art. 156 CF/88'
+                  : `${formatPercent(result.params.aliquotaItbiIntegralizacao)}`}
+                ):
+              </span>
+              <span
+                className={`font-semibold ${hld.itbiIntegralizacao.valor === 0 ? 'text-accent' : 'text-foreground'}`}
+              >
+                {hld.itbiIntegralizacao.valor === 0
+                  ? 'R$ 0 (Imunidade CF/88)'
+                  : formatCurrencyBRL(hld.itbiIntegralizacao.valor)}
               </span>
             </div>
             <div className="flex justify-between items-center text-muted-foreground">
@@ -559,6 +578,20 @@ export function CalculatorResultsView({
 
                 <TableRow>
                   <TableCell className="font-medium">
+                    {hld.honorariosAdvHolding.label}
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {hld.honorariosAdvHolding.descricao}
+                    </p>
+                  </TableCell>
+                  <TableCell>{hld.honorariosAdvHolding.baseCalculo}</TableCell>
+                  <TableCell>{hld.honorariosAdvHolding.aliquotaOuRegra}</TableCell>
+                  <TableCell className="text-right font-mono font-semibold text-accent">
+                    {formatCurrencyBRL(hld.honorariosAdvHolding.valor)}
+                  </TableCell>
+                </TableRow>
+
+                <TableRow>
+                  <TableCell className="font-medium">
                     {hld.constituicaoHolding.label}
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {hld.constituicaoHolding.descricao}
@@ -566,21 +599,31 @@ export function CalculatorResultsView({
                   </TableCell>
                   <TableCell>{hld.constituicaoHolding.baseCalculo}</TableCell>
                   <TableCell>{hld.constituicaoHolding.aliquotaOuRegra}</TableCell>
-                  <TableCell className="text-right font-mono font-semibold text-accent">
+                  <TableCell className="text-right font-mono font-semibold text-foreground">
                     {formatCurrencyBRL(hld.constituicaoHolding.valor)}
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell className="font-medium">
-                    {hld.itbiIntegralizacao.label}
+                    <div className="flex items-center gap-1.5">
+                      <span>{hld.itbiIntegralizacao.label}</span>
+                      {hld.itbiIntegralizacao.valor === 0 && (
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] py-0 px-1.5 border-accent text-accent"
+                        >
+                          Imunidade CF/88
+                        </Badge>
+                      )}
+                    </div>
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {hld.itbiIntegralizacao.descricao}
                     </p>
                   </TableCell>
                   <TableCell>{hld.itbiIntegralizacao.baseCalculo}</TableCell>
                   <TableCell>{hld.itbiIntegralizacao.aliquotaOuRegra}</TableCell>
-                  <TableCell className="text-right font-mono font-semibold text-foreground">
+                  <TableCell className="text-right font-mono font-semibold text-accent">
                     {formatCurrencyBRL(hld.itbiIntegralizacao.valor)}
                   </TableCell>
                 </TableRow>
