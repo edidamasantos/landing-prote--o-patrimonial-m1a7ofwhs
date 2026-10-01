@@ -11,7 +11,19 @@ import {
 } from '@/components/ui/sheet'
 import logo from '@/assets/fundo-transparente-editedimage1788967093128-bae21.png'
 
-const links = ['Áreas de atuação', 'Diferenciais', 'Sobre', 'Contato']
+export interface NavItem {
+  label: string
+  href: string
+}
+
+export const navItems: NavItem[] = [
+  { label: 'O que é', href: '/#o-que-e' },
+  { label: 'Segmentos', href: '/#segmentos' },
+  { label: 'Diferenciais', href: '/#diferenciais' },
+  { label: 'Áreas de atuação', href: '/#areas-de-atuacao' },
+  { label: 'Sobre', href: '/#sobre' },
+  { label: 'Contato', href: '/#contato' },
+]
 
 function ThemeToggle() {
   const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'))
@@ -43,15 +55,37 @@ function ThemeToggle() {
   )
 }
 
-function NavLink({ label, mobile = false }: { label: string; mobile?: boolean }) {
-  const preventNavigation = (event: React.MouseEvent<HTMLAnchorElement>) => event.preventDefault()
+function NavLink({
+  item,
+  mobile = false,
+  onNavigate,
+}: {
+  item: NavItem
+  mobile?: boolean
+  onNavigate?: () => void
+}) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      const hash = item.href.replace('/#', '#')
+      const target = document.querySelector(hash)
+      if (target) {
+        e.preventDefault()
+        target.scrollIntoView({ behavior: 'smooth' })
+        window.history.replaceState(null, '', hash)
+      }
+    }
+    if (onNavigate) {
+      onNavigate()
+    }
+  }
+
   const link = (
     <a
-      href="#"
-      onClick={preventNavigation}
+      href={item.href}
+      onClick={handleClick}
       className={`nav-link focus-ring ${mobile ? 'py-3 text-lg' : 'text-sm'}`}
     >
-      {label}
+      {item.label}
     </a>
   )
   return mobile ? <SheetClose asChild>{link}</SheetClose> : link
@@ -81,12 +115,23 @@ export function Layout({ children }: { children: ReactNode }) {
           </a>
           <div className="hidden items-center gap-5 md:flex">
             <nav aria-label="Navegação principal" className="flex items-center gap-5">
-              {links.map((label) => (
-                <NavLink key={label} label={label} />
+              {navItems.map((item) => (
+                <NavLink key={item.label} item={item} />
               ))}
             </nav>
             <ThemeToggle />
-            <Button type="button" className="button-motion">
+            <Button
+              type="button"
+              className="button-motion"
+              onClick={() => {
+                const target = document.getElementById('contato')
+                if (target) {
+                  target.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.location.href = '/#contato'
+                }
+              }}
+            >
               Agendar reunião
             </Button>
           </div>
@@ -105,14 +150,27 @@ export function Layout({ children }: { children: ReactNode }) {
                   <SheetTitle className="font-serif text-xl">Damasceno Santos Advocacia</SheetTitle>
                 </SheetHeader>
                 <nav aria-label="Navegação móvel" className="mt-8 flex flex-col">
-                  {links.map((label) => (
-                    <NavLink key={label} label={label} mobile />
+                  {navItems.map((item) => (
+                    <NavLink key={item.label} item={item} mobile />
                   ))}
                 </nav>
                 <div className="mt-auto flex items-center gap-3 border-t border-border py-6">
                   <ThemeToggle />
                   <SheetClose asChild>
-                    <Button type="button" className="button-motion flex-1">
+                    <Button
+                      type="button"
+                      className="button-motion flex-1"
+                      onClick={() => {
+                        setTimeout(() => {
+                          const target = document.getElementById('contato')
+                          if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' })
+                          } else {
+                            window.location.href = '/#contato'
+                          }
+                        }, 250)
+                      }}
+                    >
                       Agendar reunião
                     </Button>
                   </SheetClose>
