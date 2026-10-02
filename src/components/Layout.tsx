@@ -108,11 +108,11 @@ export function Layout({ children }: { children: ReactNode }) {
         className={`fixed inset-x-0 top-0 z-50 h-[72px] border-b bg-background/95 backdrop-blur-sm transition-shadow duration-200 ${elevated ? 'border-border shadow-md' : 'border-border/70 shadow-none'}`}
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
-          <a
-            href="/"
-            className="focus-ring max-w-[220px] font-serif text-lg font-semibold leading-tight sm:max-w-none sm:text-xl"
-          >
-            Damasceno Santos Advocacia
+          <a href="/" className="focus-ring flex items-center gap-2.5 sm:gap-3">
+            <img src={logo} alt="" className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10" />
+            <span className="font-serif text-base font-semibold leading-tight sm:text-xl">
+              Damasceno Santos Advocacia
+            </span>
           </a>
           <div className="hidden items-center gap-5 md:flex">
             <nav aria-label="Navegação principal" className="flex items-center gap-5">
@@ -148,7 +148,10 @@ export function Layout({ children }: { children: ReactNode }) {
                 className="flex w-[86vw] max-w-sm flex-col bg-background px-6"
               >
                 <SheetHeader className="text-left">
-                  <SheetTitle className="font-serif text-xl">Damasceno Santos Advocacia</SheetTitle>
+                  <SheetTitle className="flex items-center gap-2.5 font-serif text-xl">
+                    <img src={logo} alt="" className="h-8 w-8 shrink-0 object-contain" />
+                    <span>Damasceno Santos Advocacia</span>
+                  </SheetTitle>
                 </SheetHeader>
                 <nav aria-label="Navegação móvel" className="mt-8 flex flex-col">
                   {navItems.map((item) => (
