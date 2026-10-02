@@ -1,0 +1,9 @@
+# robots.txt para Damasceno Santos Advocacia
+# Permite rastreamento completo de motores de busca, bloqueando apenas a rota de agradecimento
+
+User-agent: *
+Allow: /
+Disallow: /obrigado
+
+# Sitemap
+Sitemap: https://patrimonioprotegido.goskip.app/sitemap.xml

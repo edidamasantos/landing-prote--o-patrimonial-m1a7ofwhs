@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Página inicial / Landing Page principal (Indexável) -->
+  <url>
+    <loc>https://patrimonioprotegido.goskip.app/</loc>
+    <lastmod>2025-05-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- 
+    Nota técnica SEO: A rota /obrigado é uma Thank You Page privada pós-conversão 
+    com meta robots noindex,nofollow, portanto intencionalmente excluída do sitemap.xml 
+    conforme as boas práticas dos motores de busca (Google Webmasters guidelines).
+  -->
+</urlset>

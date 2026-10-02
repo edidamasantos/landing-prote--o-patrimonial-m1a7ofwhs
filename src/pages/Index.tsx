@@ -30,6 +30,8 @@ import { ContactForm } from '@/components/ContactForm'
 import { PatrimonialCalculator } from '@/components/calculator/PatrimonialCalculator'
 import { FloatingCalculatorTrigger } from '@/components/calculator/FloatingCalculatorTrigger'
 import { ChatBotWidget } from '@/components/chat/ChatBotWidget'
+import { Seo } from '@/components/Seo'
+import { SEO_HOME, LEGAL_SERVICE_SCHEMA } from '@/config/seo'
 import {
   segmentosData,
   beneficiosHolding,
@@ -56,6 +58,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col">
+      <Seo {...SEO_HOME} jsonLd={LEGAL_SERVICE_SCHEMA} />
       {/* 1. HERO SECTION */}
       <section className="hero-glow relative flex min-h-[calc(100vh-72px)] items-center justify-center overflow-hidden px-5 py-20 text-center sm:px-6 lg:px-8">
         <div className="relative z-10 mx-auto max-w-5xl">
