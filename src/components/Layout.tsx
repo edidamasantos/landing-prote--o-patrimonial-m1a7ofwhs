@@ -109,7 +109,7 @@ export function Layout({ children }: { children: ReactNode }) {
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
           <a href="/" className="focus-ring flex items-center gap-2.5 sm:gap-3">
-            <img src={logo} alt="" className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10" />
+            <img src={logo} alt="" className="h-12 w-12 shrink-0 object-contain sm:h-14 sm:w-14" />
             <span className="font-serif text-base font-semibold leading-tight sm:text-xl">
               Damasceno Santos Advocacia
             </span>
@@ -149,7 +149,7 @@ export function Layout({ children }: { children: ReactNode }) {
               >
                 <SheetHeader className="text-left">
                   <SheetTitle className="flex items-center gap-2.5 font-serif text-xl">
-                    <img src={logo} alt="" className="h-8 w-8 shrink-0 object-contain" />
+                    <img src={logo} alt="" className="h-11 w-11 shrink-0 object-contain" />
                     <span>Damasceno Santos Advocacia</span>
                   </SheetTitle>
                 </SheetHeader>
