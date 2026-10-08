@@ -6,4 +6,4 @@ Allow: /
 Disallow: /obrigado
 
 # Sitemap
-Sitemap: https://patrimonioprotegido.goskip.app/sitemap.xml
+Sitemap: https://damascenosantosadv.com.br/sitemap.xml

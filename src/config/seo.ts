@@ -4,7 +4,7 @@
  */
 import { OFFICE_CONTACT } from './contact'
 
-export const SITE_URL = 'https://patrimonioprotegido.goskip.app'
+export const SITE_URL = 'https://damascenosantosadv.com.br'
 
 export interface SeoConfig {
   title: string
