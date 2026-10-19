@@ -31,8 +31,7 @@ export const ITCMD_ESTADOS: Record<string, UfItcmdData> = {
     herancaMax: 8,
     doacaoMin: 2,
     doacaoMax: 4,
-    descricao:
-      'SP em transição com a Reforma Tributária (EC 132/2023 e LC 227/2026): alíquota histórica linear de 4% com projetos e adequação progressiva entre 2% e 8% para causa mortis e 2% a 4% para doações.',
+    descricao: '(Progressivo de 4% a 8%)',
     baseLegal: 'Lei Estadual 10.705/2000 em adequação à EC 132/2023 e LC 227/2026',
     faixas: [
       { ate: 500000, aliquotaHeranca: 2, aliquotaDoacao: 2 },

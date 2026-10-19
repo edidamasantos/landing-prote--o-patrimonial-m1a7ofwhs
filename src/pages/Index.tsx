@@ -74,8 +74,8 @@ export default function Index() {
           <p className="hero-enter hero-delay-2 mx-auto mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl">
             Consultoria jurídica e tributária de excelência conduzida pelo escritório{' '}
             <strong className="font-semibold text-foreground">Damasceno Santos Advocacia</strong>.
-            Construímos uma muralha lícita para blindar seus bens operacionais, otimizar tributos de
-            locação e viabilizar a sucessão familiar sem os custos e desgastes do inventário.
+            Construímos uma muralha lícita para proteger seus bens operacionais, otimizar tributos
+            de locação e viabilizar a sucessão familiar sem os custos e desgastes do inventário.
           </p>
 
           <div className="hero-enter hero-delay-3 mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -100,8 +100,8 @@ export default function Index() {
           </div>
 
           {/* Destaques rápidos de autoridade */}
-          <div className="hero-enter hero-delay-3 mt-14 grid grid-cols-2 gap-4 border-t border-border/60 pt-8 sm:grid-cols-4 sm:gap-6">
-            <div className="flex flex-col items-center">
+          <div className="hero-enter hero-delay-3 mt-14 grid grid-cols-3 gap-2 border-t border-border/60 pt-8 sm:gap-6">
+            <div className="flex flex-col items-center text-center">
               <span className="font-serif text-2xl font-bold text-accent sm:text-3xl">
                 +30 anos
               </span>
@@ -109,22 +109,16 @@ export default function Index() {
                 Experiência jurídica
               </span>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center text-center">
               <span className="font-serif text-2xl font-bold text-accent sm:text-3xl">Zero</span>
               <span className="mt-1 text-xs text-muted-foreground sm:text-sm">
                 Paralisia de inventário
               </span>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="font-serif text-2xl font-bold text-accent sm:text-3xl">Até 60%</span>
+            <div className="flex flex-col items-center text-center">
+              <span className="font-serif text-2xl font-bold text-accent sm:text-3xl">Até 70%</span>
               <span className="mt-1 text-xs text-muted-foreground sm:text-sm">
                 Economia tributária
-              </span>
-            </div>
-            <div className="flex flex-col items-center">
-              <span className="font-serif text-2xl font-bold text-accent sm:text-3xl">100%</span>
-              <span className="mt-1 text-xs text-muted-foreground sm:text-sm">
-                Controle com usufruto
               </span>
             </div>
           </div>

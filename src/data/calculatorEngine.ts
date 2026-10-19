@@ -104,9 +104,9 @@ export const DEFAULT_SIMULATION_PARAMS: SimulationParams = {
   valorImoveis: 3500000, // R$ 3,5 milhões em imóveis
   regimeHonorarios: 'extrajudicial',
   honorariosContabeisMensais: 1500,
-  prazoInventarioAnos: 3,
-  percEscriturasNotas: 1.0,
-  percRegistroCartorio: 0.5,
+  prazoInventarioAnos: 5,
+  percEscriturasNotas: 2.0,
+  percRegistroCartorio: 1.0,
   certidoesCartorarias: 3500,
   percCustasJudiciarias: 1.0,
   venderBensParaCustear: false,
@@ -424,7 +424,7 @@ export function calculateSimulation(params: SimulationParams): SimulationResult 
         aliquotaOuRegra: `~${formatPercent(taxaHonorariosAdvHolding)} (Estimativa média)`,
         valor: valorHonorariosAdvHolding,
         descricao:
-          'Honorários advocatícios especializados para assessoria no planejamento sucessório e holding familiar, estimados em 2% em média do monte-mor conforme a complexidade.',
+          'Estimados em 2% em média do monte-mor, a depender da complexidade do caso, ou ainda menor dependendo dos valores envolvidos.',
       },
       constituicaoHolding: {
         id: 'constituicao-holding',
@@ -433,7 +433,7 @@ export function calculateSimulation(params: SimulationParams): SimulationResult 
         aliquotaOuRegra: 'Valor fixo estrutural',
         valor: valorConstituicao,
         descricao:
-          'Custo de constituição estrutural fixo: arquitetura do contrato/estatuto social, acordo de sócios, protocolo familiar, taxas da Junta Comercial e averbações.',
+          '(de acordo com total de bens) até 90% menor que o inventário. Arquitetura societária, acordo de sócios, Junta e registros.',
       },
       itcmdDoacaoEmVida: {
         id: 'itcmd-doacao',
@@ -448,9 +448,10 @@ export function calculateSimulation(params: SimulationParams): SimulationResult 
         id: 'contabil-holding-ano',
         label: 'Honorários Contábeis (1º ano)',
         baseCalculo: `${formatCurrencyBRL(params.honorariosContabeisHoldingMensal)}/mês × 12 meses`,
-        aliquotaOuRegra: '12 meses',
+        aliquotaOuRegra: '12 meses (em média 0,8 salários mínimos por mês)',
         valor: valorContabilHoldingAno,
-        descricao: 'Balanço anual, escrituração contábil digital e obrigações da pessoa jurídica.',
+        descricao:
+          'em média 0,8 salários mínimos por mês. Balanço anual, escrituração contábil digital e obrigações da pessoa jurídica.',
       },
       manutencaoContabilHorizonte: {
         id: 'contabil-holding-horizonte',

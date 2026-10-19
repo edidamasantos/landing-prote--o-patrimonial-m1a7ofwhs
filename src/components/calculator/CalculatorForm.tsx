@@ -207,8 +207,8 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                   <span className="font-mono text-xs font-bold text-accent">8% OAB</span>
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Consensual entre herdeiros maiores e capazes. Prazo menor, sem contencioso
-                  judicial.
+                  8% do valor total dos bens OAB desde que consensual entre herdeiros maiores e
+                  capazes.
                 </p>
               </div>
 
@@ -227,8 +227,8 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                   <span className="font-mono text-xs font-bold text-destructive">10% OAB</span>
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Disputa entre herdeiros, menores ou testamento contestado. Processo de anos na
-                  vara de família.
+                  10% OAB - Vl tot dos bens. Disputa entre herdeiros, menores ou testamento
+                  contestado. Processo pode demorar muitos anos em varas de família.
                 </p>
               </div>
             </div>
@@ -360,7 +360,11 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
               {/* Prazo */}
               <div className="space-y-1.5">
                 <Label className="text-xs font-medium">
-                  Prazo do Inventário ({params.prazoInventarioAnos} anos)
+                  Prazo do Inventário (
+                  {params.prazoInventarioAnos >= 5
+                    ? 'Até 5 anos'
+                    : `${params.prazoInventarioAnos} anos`}
+                  )
                 </Label>
                 <Slider
                   value={[params.prazoInventarioAnos]}
@@ -397,12 +401,12 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                 <Slider
                   value={[params.percEscriturasNotas]}
                   min={0.5}
-                  max={2}
+                  max={3}
                   step={0.1}
                   onValueChange={([val]) => update('percEscriturasNotas', val)}
                   aria-label="Percentual de escrituras"
                 />
-                <p className="text-[11px] text-muted-foreground">~1% sobre imóveis</p>
+                <p className="text-[11px] text-muted-foreground">~2% sobre imóveis</p>
               </div>
 
               {/* Registro Cartório */}
@@ -413,12 +417,12 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                 <Slider
                   value={[params.percRegistroCartorio]}
                   min={0.2}
-                  max={1.5}
+                  max={2}
                   step={0.1}
                   onValueChange={([val]) => update('percRegistroCartorio', val)}
                   aria-label="Percentual de registro"
                 />
-                <p className="text-[11px] text-muted-foreground">~0,5% sobre imóveis</p>
+                <p className="text-[11px] text-muted-foreground">~1% sobre imóveis</p>
               </div>
             </div>
 
@@ -478,12 +482,12 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                     aria-label="Honorários advocatícios da holding percentual do monte-mor"
                   />
                   <p className="text-[11px] text-muted-foreground leading-tight">
-                    Estimados em <strong>2% em média do monte-mor</strong>, a depender da
-                    complexidade do caso.
+                    Estimados em 2% em média do monte-mor, a depender da complexidade do caso, ou
+                    ainda menor dependendo dos valores envolvidos.
                   </p>
                 </div>
 
-                {/* 3. Custo Estrutural de Constituição Fixo (R$ 30k a R$ 80k) */}
+                {/* 3. Custo Estrutural de Constituição Fixo */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
                     <Label className="text-xs font-medium">Custo Estrutural Fixo</Label>
@@ -500,7 +504,8 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                     aria-label="Custo de constituição estrutural fixo"
                   />
                   <p className="text-[11px] text-muted-foreground leading-tight">
-                    Arquitetura societária, acordo de sócios, Junta e registros (R$ 30k a R$ 80k).
+                    (de acordo com total de bens) até 90% menor que o inventário. Arquitetura
+                    societária, acordo de sócios, Junta e registros.
                   </p>
                 </div>
 
@@ -509,7 +514,8 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                   <div className="flex items-center justify-between">
                     <Label className="text-xs font-medium">Contabilidade Holding</Label>
                     <span className="font-mono text-xs font-semibold text-foreground">
-                      {formatCurrencyBRL(params.honorariosContabeisHoldingMensal)}/mês
+                      em média 0,8 salários mínimos por mês (
+                      {formatCurrencyBRL(params.honorariosContabeisHoldingMensal)}/mês)
                     </span>
                   </div>
                   <Slider
@@ -521,7 +527,8 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
                     aria-label="Contabilidade mensal holding"
                   />
                   <p className="text-[11px] text-muted-foreground leading-tight">
-                    Escrituração e conformidade contábil anual da pessoa jurídica.
+                    em média 0,8 salários mínimos por mês. Escrituração e conformidade contábil
+                    anual da pessoa jurídica.
                   </p>
                 </div>
               </div>
