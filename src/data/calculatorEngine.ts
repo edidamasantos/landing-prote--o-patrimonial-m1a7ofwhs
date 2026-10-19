@@ -407,15 +407,18 @@ export function calculateSimulation(params: SimulationParams): SimulationResult 
     holdingComponents: {
       itbiIntegralizacao: {
         id: 'itbi-holding',
-        label: 'ITBI na Integralização de Imóveis',
+        label: 'ITBI na Constituição da Holding',
         baseCalculo:
           taxaItbi === 0
-            ? 'Imunidade Constitucional (CF/88, art. 156)'
-            : `Imóveis integrais (${formatCurrencyBRL(baseImoveisCartorio)})`,
-        aliquotaOuRegra: taxaItbi === 0 ? 'R$ 0 (Isento/Imune)' : `${formatPercent(taxaItbi)}`,
+            ? 'Imunidade Constitucional (CF/88, art. 156, § 2º, I)'
+            : `Imóveis integralizados (${formatCurrencyBRL(baseImoveisCartorio)})`,
+        aliquotaOuRegra:
+          taxaItbi === 0
+            ? 'R$ 0 (Zerado na constituição — art. 156 CF/88)'
+            : `${formatPercent(taxaItbi)}`,
         valor: valorItbi,
         descricao:
-          'ITBI zerado com base no art. 156 da CF/88 (integração de bens ao capital da sociedade não configura fato gerador do ITBI); exceções para empresas do ramo imobiliário serão analisadas caso a caso.',
+          'O ITBI é considerado ZERADO na constituição da holding familiar com esteio no art. 156, § 2º, I da CF/88 (transferência de bens para integralização de capital social). Eventuais exceções ligadas à preponderância imobiliária ou teses municipais são analisadas individualmente em parecer técnico.',
       },
       honorariosAdvHolding: {
         id: 'honorarios-adv-holding',

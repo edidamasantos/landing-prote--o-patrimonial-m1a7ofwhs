@@ -537,10 +537,11 @@ export function CalculatorForm({ params, onChange, onCalculate }: CalculatorForm
               <div className="rounded-lg border border-accent/30 bg-background/70 p-3 text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
                 <Info className="h-4 w-4 shrink-0 text-accent mt-0.5" />
                 <div>
-                  <strong className="text-foreground">Fundamento do ITBI zerado:</strong> ITBI
-                  zerado com base no art. 156 da CF/88 (integração de bens ao capital da sociedade
-                  não configura fato gerador do ITBI); exceções para empresas do ramo imobiliário
-                  serão analisadas caso a caso.
+                  <strong className="text-foreground">ITBI Zerado na Constituição:</strong> O ITBI
+                  aparece como R$ 0 na constituição da holding familiar por força da imunidade
+                  prevista no art. 156, § 2º, I da Constituição Federal (integralização de imóveis
+                  no capital da pessoa jurídica). O controle de alíquota permite testar cenários
+                  específicos caso haja interesse.
                 </div>
               </div>
             </div>

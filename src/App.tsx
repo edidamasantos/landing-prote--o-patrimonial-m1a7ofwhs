@@ -4,6 +4,7 @@ import { Layout } from '@/components/Layout'
 
 const Index = lazy(() => import('@/pages/Index'))
 const Obrigado = lazy(() => import('@/pages/Obrigado'))
+const Diagnostico = lazy(() => import('@/pages/Diagnostico'))
 
 function LoadingFallback() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/diagnostico" element={<Diagnostico />} />
           <Route path="/obrigado" element={<Obrigado />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

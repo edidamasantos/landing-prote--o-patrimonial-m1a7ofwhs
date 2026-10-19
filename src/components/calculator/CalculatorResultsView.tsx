@@ -257,9 +257,9 @@ export function CalculatorResultsView({
             </div>
             <div className="flex justify-between items-center text-muted-foreground">
               <span className="flex items-center gap-1">
-                ITBI na Integralização (
+                ITBI na Constituição (
                 {result.params.aliquotaItbiIntegralizacao === 0
-                  ? '0% - Art. 156 CF/88'
+                  ? 'Zerado - Art. 156 CF/88'
                   : `${formatPercent(result.params.aliquotaItbiIntegralizacao)}`}
                 ):
               </span>
@@ -267,7 +267,7 @@ export function CalculatorResultsView({
                 className={`font-semibold ${hld.itbiIntegralizacao.valor === 0 ? 'text-accent' : 'text-foreground'}`}
               >
                 {hld.itbiIntegralizacao.valor === 0
-                  ? 'R$ 0 (Imunidade CF/88)'
+                  ? 'R$ 0 (Zerado na Constituição)'
                   : formatCurrencyBRL(hld.itbiIntegralizacao.valor)}
               </span>
             </div>
@@ -613,7 +613,7 @@ export function CalculatorResultsView({
                           variant="outline"
                           className="text-[10px] py-0 px-1.5 border-accent text-accent"
                         >
-                          Imunidade CF/88
+                          Zerado na Constituição (CF/88)
                         </Badge>
                       )}
                     </div>

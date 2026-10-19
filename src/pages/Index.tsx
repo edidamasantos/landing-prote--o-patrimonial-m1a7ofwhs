@@ -243,6 +243,66 @@ export default function Index() {
         </div>
       </section>
 
+      {/* 2.4 TEASER MATRIZ DE DECISÃO / DIAGNÓSTICO PATRIMONIAL */}
+      <section
+        id="teaser-diagnostico"
+        className="scroll-mt-20 border-t border-border/60 bg-card py-12 sm:py-16"
+      >
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border-2 border-accent/40 bg-gradient-to-br from-accent/10 via-card to-card p-6 sm:p-10 shadow-lg">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+              <div className="space-y-4 max-w-2xl">
+                <div>
+                  <Badge
+                    variant="outline"
+                    className="border-accent text-accent uppercase tracking-wider text-xs font-semibold mb-2"
+                  >
+                    Matriz de Decisão Interativa
+                  </Badge>
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
+                    Descubra o Instrumento Jurídico Ideal para Sua Família
+                  </h2>
+                </div>
+
+                {/* 3 Bullets Curtos */}
+                <ul className="space-y-2 text-sm sm:text-base text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-accent shrink-0" />
+                    <span>Mapeamento de 5 necessidades críticas em 7 perguntas objetivas</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-accent shrink-0" />
+                    <span>
+                      Aderência comparada de Holding, Seguro, Testamento e Acordo de Sócios
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-accent shrink-0" />
+                    <span>
+                      Orientação preliminar gratuita e educativa antes de qualquer decisão
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="shrink-0 flex flex-col sm:flex-row items-center gap-3">
+                <Button
+                  type="button"
+                  size="lg"
+                  asChild
+                  className="button-motion w-full sm:w-auto px-8 py-6 text-base font-semibold shadow-md"
+                >
+                  <a href="/diagnostico">
+                    Diagnóstico em 3 minutos
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 2.5 SEÇÃO DEDICADA: CALCULADORA COMPARATIVA DE CUSTOS v2 */}
       <section
         id="calculadora"

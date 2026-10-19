@@ -18,6 +18,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: 'O que é', href: '/#o-que-e' },
+  { label: 'Diagnóstico', href: '/diagnostico' },
   { label: 'Calculadora', href: '/#calculadora' },
   { label: 'Segmentos', href: '/#segmentos' },
   { label: 'Diferenciais', href: '/#diferenciais' },
@@ -216,6 +217,12 @@ export function Layout({ children }: { children: ReactNode }) {
                 >
                   <Phone className="h-4 w-4 text-accent" />
                   (11) 95769-7373 (WhatsApp)
+                </a>
+              </li>
+              <li>
+                <a href="/diagnostico" className="footer-link">
+                  <span className="h-2 w-2 rounded-full bg-accent" />
+                  Diagnóstico Patrimonial (3 min)
                 </a>
               </li>
               <li>
